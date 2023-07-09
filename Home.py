@@ -4,7 +4,7 @@ import streamlit as st
 
 st.set_page_config(
     page_title="Clasificador de patrones de flujo",
-    page_icon="🍍",
+    page_icon="🦆",
 )
 
 st.write("# Bienvenido a tu primer clasificador 👋")
@@ -46,5 +46,7 @@ st.markdown(
 
     La base de datos permite realizar consultas, análisis y visualización de los datos, facilitando el estudio de los patrones de flujo y la identificación de relaciones y tendencias entre los datos de entrada y los patrones observados. También puede ser utilizada para desarrollar modelos predictivos o algoritmos de clasificación que permitan predecir el patrón de flujo en función de los datos de entrada proporcionados.
     
+    
+
     """
 )

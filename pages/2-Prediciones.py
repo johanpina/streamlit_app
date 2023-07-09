@@ -1,7 +1,37 @@
 import streamlit as st 
 import pandas as pd
+import requests
 
 import pickle
+def solicitud_API(muestra:list):
+    
+    # URL de la API
+    url = 'https://miapistreamlit.azurewebsites.net/predict'
+
+    # Datos de entrada
+    data = {
+        "data": [muestra]
+    }
+
+    # Realizar la solicitud POST a la API
+    response = requests.post(url, json=data)
+
+    # Verificar el código de estado de la respuesta
+    if response.status_code == 200:
+        # Obtener la respuesta en formato JSON
+        result = response.json()
+        
+        # Obtener la predicción
+        prediction = result["prediction"]
+        
+        # Imprimir la predicción
+        print("Predicción:", prediction)
+        return prediction
+    else:
+        print("Error en la solicitud:", response.status_code)
+        return None
+
+
 
 with open('models/modelRF.pkl','rb') as gb:
     modelo = pickle.load(gb)
@@ -42,7 +72,7 @@ def user_input_parameters():
 df = user_input_parameters()
 ###########################################################
 ###########################################################
-st.subheader("Modelo GB ")
+st.subheader("Modelo RF ")
 
 # Crear un nuevo DataFrame con una fila adicional 'Valor'
 df = df.T.reset_index()
@@ -62,7 +92,8 @@ if predict_clicked:
             st.warning("Por favor, complete todos los datos con valores numéricos antes de hacer la predicción.")
             break
         else:
-            prediction = modelo.predict(df)
+            #prediction = modelo.predict(df)
+            prediction = solicitud_API(df.values.flatten().tolist())
 
     # Crear un diccionario para asociar las predicciones con sus descripciones
     prediction_descriptions = {
